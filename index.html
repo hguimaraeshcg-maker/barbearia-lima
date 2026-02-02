@@ -12,19 +12,41 @@ body {
   background: #0d0d0d;
   color: #fff;
 }
-header {
-  background: #000;
-  padding: 20px;
-  text-align: center;
-}
-header h1 {
-  color: #d4af37;
-}
+
 section {
   padding: 20px;
   max-width: 900px;
   margin: auto;
 }
+
+.home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.home img {
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+.home h1 {
+  color: #d4af37;
+  margin-bottom: 5px;
+}
+
+.home button {
+  margin-top: 20px;
+  padding: 15px 35px;
+  background: #d4af37;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 .services button {
   width: 100%;
   margin: 5px 0;
@@ -34,19 +56,23 @@ section {
   border: 1px solid #d4af37;
   cursor: pointer;
 }
+
 .services button.selected {
   background: #d4af37;
   color: #000;
 }
+
 input, select {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
 }
+
 .confirmation {
   display: none;
   text-align: center;
 }
+
 .confirmation a {
   display: block;
   margin: 10px 0;
@@ -55,6 +81,7 @@ input, select {
   color: #000;
   text-decoration: none;
 }
+
 footer {
   text-align: center;
   padding: 10px;
@@ -65,16 +92,20 @@ footer {
 
 <body>
 
-<header>
+<!-- HOME -->
+<section class="home" id="home">
+  <img src="logo.png" alt="Barbearia Lima">
   <h1>Barbearia Lima</h1>
   <p>Estilo, precisão e atitude</p>
-</header>
+  <button onclick="irAgendamento()">Agendar horário</button>
+</section>
 
-<section id="agendamento">
+<!-- AGENDAMENTO -->
+<section id="agendamento" style="display:none;">
   <h2>Agende seu horário</h2>
 
-  <input type="text" id="nome" placeholder="Seu nome" required>
-  <input type="tel" id="telefone" placeholder="Seu WhatsApp" required>
+  <input type="text" id="nome" placeholder="Seu nome">
+  <input type="tel" id="telefone" placeholder="Seu WhatsApp">
 
   <label>Profissional</label>
   <select id="profissional">
@@ -103,14 +134,20 @@ footer {
   <button onclick="confirmar()">Confirmar Agendamento</button>
 </section>
 
+<!-- CONFIRMAÇÃO -->
 <section class="confirmation" id="confirmacao">
   <h2>Agendamento Confirmado</h2>
   <p id="resumo"></p>
 
   <p>Pagamento via Pix</p>
-  <img src="qrcode-pix.png" alt="Pix" width="200">
+  <img src="qrcode-pix.png" width="200">
 
-  <a href="https://www.google.com/maps" target="_blank">Ver localização no Google Maps</a>
+  <a href="https://maps.app.goo.gl/4FCZAq8sARFvnLb17" target="_blank">
+    Rua Clóvis Santos, 382<br>
+    CEP 45602-405<br>
+    Ver no Google Maps
+  </a>
+
   <a id="whatsappLink" target="_blank">Confirmar no WhatsApp</a>
 </section>
 
@@ -119,6 +156,11 @@ footer {
 </footer>
 
 <script>
+function irAgendamento() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("agendamento").style.display = "block";
+}
+
 const servicos = [
   "Cabelo e barba - R$40",
   "Cabelo - R$30",
@@ -167,7 +209,8 @@ function confirmar() {
     `Olá ${nome}! Seu agendamento na Barbearia Lima foi confirmado.\nServiço: ${servicoSelecionado}\nData: ${data} às ${hora}`
   );
 
-  document.getElementById("whatsappLink").href = `https://wa.me/55${tel.replace(/\D/g, "")}?text=${msg}`;
+  document.getElementById("whatsappLink").href =
+    `https://wa.me/55${tel.replace(/\D/g, "")}?text=${msg}`;
 }
 </script>
 
