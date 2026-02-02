@@ -116,9 +116,23 @@ footer {
   <label>Profissional</label>
   <div style="display:flex; align-items:center; gap:10px;">
     <select id="profissional" onchange="mostrarFotoProfissional()">
+      <option value="">Selecione</option>
       <option value="leo">Léo</option>
     </select>
-    <img id="fotoProfissional" src="leo.jpeg" alt="Foto do profissional" width="60" style="border-radius:50%; border:2px solid #d4af37;">
+    <!-- Foto inicial em branco -->
+    <div id="fotoProfissional" style="
+         width:60px; height:60px;
+         background:#1a1a1a;
+         border:2px solid #d4af37;
+         border-radius:50%;
+         display:flex;
+         justify-content:center;
+         align-items:center;
+         color:#d4af37;
+         font-size:12px;
+         font-weight:bold;
+         text-align:center;
+    ">Foto</div>
   </div>
 
   <label>Serviço</label>
@@ -206,9 +220,20 @@ const profissionais = {
 function mostrarFotoProfissional() {
   const sel = document.getElementById("profissional");
   const prof = sel.value;
-  const img = document.getElementById("fotoProfissional");
-  img.src = profissionais[prof].foto;
-  img.alt = `Foto de ${profissionais[prof].nome}`;
+  const divFoto = document.getElementById("fotoProfissional");
+
+  if (prof) {
+    divFoto.style.backgroundImage = `url(${profissionais[prof].foto})`;
+    divFoto.style.backgroundSize = "cover";
+    divFoto.style.backgroundPosition = "center";
+    divFoto.innerText = "";
+    divFoto.style.borderRadius = "50%";
+  } else {
+    divFoto.style.backgroundImage = "none";
+    divFoto.style.background = "#1a1a1a";
+    divFoto.innerText = "Foto";
+    divFoto.style.borderRadius = "50%";
+  }
 }
 
 // Confirmar agendamento
@@ -219,7 +244,7 @@ function confirmar() {
   const hora = document.getElementById("horario").value;
   const prof = document.getElementById("profissional").value;
 
-  if (!nome || !tel || !servicoSelecionado || !data || !hora) {
+  if (!nome || !tel || !servicoSelecionado || !data || !hora || !prof) {
     alert("Preencha todos os campos corretamente.");
     return;
   }
@@ -242,8 +267,12 @@ function confirmar() {
   document.getElementById("telefone").value = "";
   document.getElementById("data").value = "";
   document.getElementById("horario").selectedIndex = 0;
+  document.getElementById("profissional").selectedIndex = 0;
   document.querySelectorAll(".services button").forEach(b => b.classList.remove("selected"));
   servicoSelecionado = "";
+
+  // Reset foto para branco
+  mostrarFotoProfissional();
 }
 </script>
 
