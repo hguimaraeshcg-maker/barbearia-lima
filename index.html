@@ -47,6 +47,12 @@ section {
   cursor: pointer;
 }
 
+button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+  transition: 0.2s;
+}
+
 .services button {
   width: 100%;
   margin: 5px 0;
@@ -94,7 +100,7 @@ footer {
 
 <!-- HOME -->
 <section class="home" id="home">
-  <img src="unnamed.jpg" alt="Barbearia Lima">
+  <img src="unnamed.jpg" alt="Barbearia Lima"> 
   <h1>Barbearia Lima</h1>
   <p>Estilo, precisão e atitude</p>
   <button onclick="irAgendamento()">Agendar horário</button>
@@ -108,9 +114,12 @@ footer {
   <input type="tel" id="telefone" placeholder="Seu WhatsApp">
 
   <label>Profissional</label>
-  <select id="profissional">
-    <option>Léo</option>
-  </select>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <select id="profissional" onchange="mostrarFotoProfissional()">
+      <option value="leo">Léo</option>
+    </select>
+    <img id="fotoProfissional" src="leo.jpg" alt="Foto do profissional" width="60" style="border-radius:50%; border:2px solid #d4af37;">
+  </div>
 
   <label>Serviço</label>
   <div class="services" id="services"></div>
@@ -156,11 +165,13 @@ footer {
 </footer>
 
 <script>
+// Função para ir para agendamento
 function irAgendamento() {
   document.getElementById("home").style.display = "none";
   document.getElementById("agendamento").style.display = "block";
 }
 
+// Serviços
 const servicos = [
   "Cabelo e barba - R$40",
   "Cabelo - R$30",
@@ -187,6 +198,20 @@ servicos.forEach(s => {
   container.appendChild(btn);
 });
 
+// Profissional Léo
+const profissionais = {
+  leo: { nome: "Léo", foto: "leo.jpg" }
+};
+
+function mostrarFotoProfissional() {
+  const sel = document.getElementById("profissional");
+  const prof = sel.value;
+  const img = document.getElementById("fotoProfissional");
+  img.src = profissionais[prof].foto;
+  img.alt = `Foto de ${profissionais[prof].nome}`;
+}
+
+// Confirmar agendamento
 function confirmar() {
   const nome = document.getElementById("nome").value;
   const tel = document.getElementById("telefone").value;
@@ -194,16 +219,16 @@ function confirmar() {
   const hora = document.getElementById("horario").value;
   const prof = document.getElementById("profissional").value;
 
-  if (!nome || !tel || !servicoSelecionado) {
-    alert("Preencha tudo corretamente.");
+  if (!nome || !tel || !servicoSelecionado || !data || !hora) {
+    alert("Preencha todos os campos corretamente.");
     return;
   }
 
   document.getElementById("agendamento").style.display = "none";
   document.getElementById("confirmacao").style.display = "block";
 
-  document.getElementById("resumo").innerText =
-    `${nome}, seu horário com ${prof} foi agendado para ${data} às ${hora}.\nServiço: ${servicoSelecionado}`;
+  document.getElementById("resumo").innerHTML =
+    `${nome}, seu horário com ${profissionais[prof].nome} foi agendado para ${data} às ${hora}.<br>Serviço: ${servicoSelecionado}`;
 
   const msg = encodeURIComponent(
     `Olá ${nome}! Seu agendamento na Barbearia Lima foi confirmado.\nServiço: ${servicoSelecionado}\nData: ${data} às ${hora}`
@@ -211,6 +236,14 @@ function confirmar() {
 
   document.getElementById("whatsappLink").href =
     `https://wa.me/55${tel.replace(/\D/g, "")}?text=${msg}`;
+
+  // Limpar formulário
+  document.getElementById("nome").value = "";
+  document.getElementById("telefone").value = "";
+  document.getElementById("data").value = "";
+  document.getElementById("horario").selectedIndex = 0;
+  document.querySelectorAll(".services button").forEach(b => b.classList.remove("selected"));
+  servicoSelecionado = "";
 }
 </script>
 
