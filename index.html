@@ -6,19 +6,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
+/* Reset básico */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: Arial, sans-serif;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
   background: #0d0d0d;
   color: #fff;
+  line-height: 1.5;
 }
 
 section {
-  padding: 20px;
+  padding: 30px 20px;
   max-width: 900px;
   margin: auto;
 }
 
+/* HOME */
 .home {
   height: 100vh;
   display: flex;
@@ -26,72 +34,159 @@ section {
   justify-content: center;
   align-items: center;
   text-align: center;
+  background: linear-gradient(135deg, #1a1a1a, #111);
 }
 
 .home img {
   width: 180px;
   margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(212,175,55,0.6);
 }
 
 .home h1 {
   color: #d4af37;
-  margin-bottom: 5px;
+  font-size: 3em;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #d4af37;
+}
+
+.home p {
+  color: #ccc;
+  font-size: 1.2em;
 }
 
 .home button {
-  margin-top: 20px;
-  padding: 15px 35px;
+  margin-top: 25px;
+  padding: 15px 45px;
   background: #d4af37;
   border: none;
   font-size: 16px;
   cursor: pointer;
+  border-radius: 30px;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(212,175,55,0.4);
+  transition: 0.3s;
 }
 
-button:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-  transition: 0.2s;
+.home button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(212,175,55,0.6);
+}
+
+/* FORMULÁRIO */
+#agendamento h2 {
+  color: #d4af37;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+input, select, button.services-btn {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: 1px solid #d4af37;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 16px;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #f0d55c;
+  box-shadow: 0 0 8px #f0d55c;
+}
+
+.services {
+  display: flex;
+  flex-direction: column;
 }
 
 .services button {
-  width: 100%;
-  margin: 5px 0;
-  padding: 12px;
   background: #1a1a1a;
   color: #fff;
   border: 1px solid #d4af37;
+  padding: 12px;
+  margin: 5px 0;
   cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.2s;
 }
 
-.services button.selected {
+.services button.selected, .services button:hover {
   background: #d4af37;
   color: #000;
 }
 
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
+#profissional, #data, #horario {
+  margin-bottom: 15px;
 }
 
+/* FOTO PROFISSIONAL */
+#fotoProfissional {
+  width: 70px;
+  height: 70px;
+  background: #1a1a1a;
+  border: 3px solid #d4af37;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #d4af37;
+  font-size: 12px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+/* CONFIRMAÇÃO */
 .confirmation {
   display: none;
   text-align: center;
 }
 
+.confirmation h2 {
+  color: #d4af37;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.confirmation p {
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
 .confirmation a {
-  display: block;
-  margin: 10px 0;
-  padding: 12px;
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 12px 20px;
   background: #d4af37;
   color: #000;
   text-decoration: none;
+  font-weight: bold;
+  border-radius: 15px;
+  transition: 0.3s;
+}
+
+.confirmation a:hover {
+  background: #f0d55c;
 }
 
 footer {
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   font-size: 12px;
+  color: #888;
+}
+
+/* Layout selecao profissional */
+.prof-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
 }
 </style>
 </head>
@@ -114,25 +209,12 @@ footer {
   <input type="tel" id="telefone" placeholder="Seu WhatsApp">
 
   <label>Profissional</label>
-  <div style="display:flex; align-items:center; gap:10px;">
+  <div class="prof-container">
     <select id="profissional" onchange="mostrarFotoProfissional()">
       <option value="">Selecione</option>
       <option value="leo">Léo</option>
     </select>
-    <!-- Foto inicial em branco -->
-    <div id="fotoProfissional" style="
-         width:60px; height:60px;
-         background:#1a1a1a;
-         border:2px solid #d4af37;
-         border-radius:50%;
-         display:flex;
-         justify-content:center;
-         align-items:center;
-         color:#d4af37;
-         font-size:12px;
-         font-weight:bold;
-         text-align:center;
-    ">Foto</div>
+    <div id="fotoProfissional">Foto</div>
   </div>
 
   <label>Serviço</label>
@@ -154,7 +236,7 @@ footer {
     <option>18:00</option>
   </select>
 
-  <button onclick="confirmar()">Confirmar Agendamento</button>
+  <button onclick="confirmar()" style="margin-top:15px;">Confirmar Agendamento</button>
 </section>
 
 <!-- CONFIRMAÇÃO -->
@@ -204,6 +286,7 @@ const container = document.getElementById("services");
 servicos.forEach(s => {
   const btn = document.createElement("button");
   btn.innerText = s;
+  btn.classList.add("services-btn");
   btn.onclick = () => {
     document.querySelectorAll(".services button").forEach(b => b.classList.remove("selected"));
     btn.classList.add("selected");
@@ -212,7 +295,7 @@ servicos.forEach(s => {
   container.appendChild(btn);
 });
 
-// Profissional Léo com arquivo local leo.jpeg
+// Profissional Léo com foto local
 const profissionais = {
   leo: { nome: "Léo", foto: "leo.jpeg" }
 };
@@ -271,7 +354,6 @@ function confirmar() {
   document.querySelectorAll(".services button").forEach(b => b.classList.remove("selected"));
   servicoSelecionado = "";
 
-  // Reset foto para branco
   mostrarFotoProfissional();
 }
 </script>
