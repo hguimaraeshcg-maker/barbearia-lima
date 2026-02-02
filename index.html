@@ -1,57 +1,70 @@
-<!-- HOME / PÁGINA INICIAL -->
-<section id="home" style="text-align:center; padding:50px; background:#0d0d0d;">
-  <img src="unnamed.png" alt="Logo da Barbearia LB" width="200" style="margin-bottom:20px;">
-  <h1 style="color:#d4af37; font-size:36px; margin-bottom:10px;">Barbearia LB</h1>
-  <p style="color:#fff; font-size:18px; margin-bottom:30px;">Estilo, precisão e atitude</p>
-  <button onclick="mostrarAgendamento()" style="padding:15px 30px; font-size:18px; background:#d4af37; color:#000; border:none; cursor:pointer;">Agendar Horário</button>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbearia LB</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; background:#0d0d0d; color:#fff; }
+  section { padding:50px 20px; text-align:center; }
+  img.logo { width:200px; margin-bottom:20px; }
+  h1 { color:#d4af37; font-size:36px; margin-bottom:10px; }
+  p { font-size:18px; margin-bottom:30px; }
+  button { padding:15px 30px; font-size:18px; background:#d4af37; color:#000; border:none; cursor:pointer; }
+  input, select { padding:10px; margin:5px 0; width:200px; }
+  .services button { margin:5px; padding:10px; cursor:pointer; }
+  .selected { background:#d4af37; color:#000; }
+  #agendamento, #confirmacao { display:none; }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<section id="home">
+  <img src="unnamed.png" alt="Logo da Barbearia LB" class="logo">
+  <h1>Barbearia LB</h1>
+  <p>Estilo, precisão e atitude</p>
+  <button onclick="mostrarAgendamento()">Agendar Horário</button>
 </section>
 
 <!-- AGENDAMENTO -->
-<section id="agendamento" style="display:none; padding:20px; max-width:900px; margin:auto;">
+<section id="agendamento">
   <h2>Agende seu horário</h2>
-  <input type="text" id="nome" placeholder="Seu nome" required>
-  <input type="tel" id="telefone" placeholder="Seu WhatsApp" required>
-  <label>Profissional</label>
+  <input type="text" id="nome" placeholder="Seu nome" required><br>
+  <input type="tel" id="telefone" placeholder="Seu WhatsApp" required><br>
+  <label>Profissional</label><br>
   <select id="profissional">
     <option>Léo</option>
-  </select>
-  <label>Serviço</label>
-  <div class="services" id="services"></div>
-  <label>Data</label>
-  <input type="date" id="data">
-  <label>Horário</label>
+  </select><br>
+  <label>Serviço</label><br>
+  <div class="services" id="services"></div><br>
+  <label>Data</label><br>
+  <input type="date" id="data"><br>
+  <label>Horário</label><br>
   <select id="horario">
-    <option>08:00</option>
-    <option>09:00</option>
-    <option>10:00</option>
-    <option>11:00</option>
-    <option>14:00</option>
-    <option>15:00</option>
-    <option>16:00</option>
-    <option>17:00</option>
-    <option>18:00</option>
-  </select>
+    <option>08:00</option><option>09:00</option><option>10:00</option>
+    <option>11:00</option><option>14:00</option><option>15:00</option>
+    <option>16:00</option><option>17:00</option><option>18:00</option>
+  </select><br><br>
   <button onclick="confirmar()">Confirmar Agendamento</button>
 </section>
 
 <!-- CONFIRMAÇÃO -->
-<section class="confirmation" id="confirmacao" style="display:none; text-align:center;">
+<section id="confirmacao">
   <h2>Agendamento Confirmado</h2>
   <p id="resumo"></p>
   <p>Pagamento via Pix</p>
-  <img src="qrcode-pix.png" alt="Pix" width="200">
-  <a href="https://maps.app.goo.gl/4FCZAq8sARFvnLb17" target="_blank">Ver localização no Google Maps</a>
+  <img src="qrcode-pix.png" alt="Pix" width="200"><br>
   <a id="whatsappLink" target="_blank">Confirmar no WhatsApp</a>
 </section>
 
 <script>
-// Função para mostrar a tela de agendamento
 function mostrarAgendamento() {
   document.getElementById("home").style.display = "none";
   document.getElementById("agendamento").style.display = "block";
 }
 
-// Lista de serviços
+// Serviços
 const servicos = [
   "Cabelo e barba - R$40",
   "Cabelo - R$30",
@@ -77,7 +90,6 @@ servicos.forEach(s => {
   container.appendChild(btn);
 });
 
-// Confirmar agendamento
 function confirmar() {
   const nome = document.getElementById("nome").value;
   const tel = document.getElementById("telefone").value;
@@ -103,3 +115,6 @@ function confirmar() {
   document.getElementById("whatsappLink").href = `https://wa.me/55${tel.replace(/\D/g, "")}?text=${msg}`;
 }
 </script>
+
+</body>
+</html>
