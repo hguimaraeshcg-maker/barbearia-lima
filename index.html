@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Barbearia Lima</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body {
   margin: 0;
@@ -12,41 +11,32 @@ body {
   background: #0d0d0d;
   color: #fff;
 }
-
+header {
+  background: #000;
+  padding: 20px;
+  text-align: center;
+}
+header img {
+  width: 150px;
+  margin-bottom: 10px;
+}
+header h1 {
+  color: #d4af37;
+  margin: 5px 0;
+}
 section {
   padding: 20px;
   max-width: 900px;
   margin: auto;
 }
-
-.home {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.home img {
-  width: 180px;
-  margin-bottom: 20px;
-}
-
-.home h1 {
-  color: #d4af37;
-  margin-bottom: 5px;
-}
-
-.home button {
-  margin-top: 20px;
-  padding: 15px 35px;
+button {
+  padding: 12px;
   background: #d4af37;
+  color: #000;
   border: none;
-  font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
 }
-
 .services button {
   width: 100%;
   margin: 5px 0;
@@ -56,23 +46,19 @@ section {
   border: 1px solid #d4af37;
   cursor: pointer;
 }
-
 .services button.selected {
   background: #d4af37;
   color: #000;
 }
-
 input, select {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
 }
-
 .confirmation {
   display: none;
   text-align: center;
 }
-
 .confirmation a {
   display: block;
   margin: 10px 0;
@@ -81,7 +67,6 @@ input, select {
   color: #000;
   text-decoration: none;
 }
-
 footer {
   text-align: center;
   padding: 10px;
@@ -89,23 +74,21 @@ footer {
 }
 </style>
 </head>
-
 <body>
 
-<!-- HOME -->
-<section class="home" id="home">
-  <img src="logo.png" alt="Barbearia Lima">
+<!-- PÁGINA INICIAL -->
+<section id="home" style="text-align:center; padding:50px;">
+  <img src="unnamed" alt="Logo da Barbearia Lima">
   <h1>Barbearia Lima</h1>
   <p>Estilo, precisão e atitude</p>
-  <button onclick="irAgendamento()">Agendar horário</button>
+  <button onclick="mostrarAgendamento()">Agendar Horário</button>
 </section>
 
 <!-- AGENDAMENTO -->
 <section id="agendamento" style="display:none;">
   <h2>Agende seu horário</h2>
-
-  <input type="text" id="nome" placeholder="Seu nome">
-  <input type="tel" id="telefone" placeholder="Seu WhatsApp">
+  <input type="text" id="nome" placeholder="Seu nome" required>
+  <input type="tel" id="telefone" placeholder="Seu WhatsApp" required>
 
   <label>Profissional</label>
   <select id="profissional">
@@ -138,16 +121,9 @@ footer {
 <section class="confirmation" id="confirmacao">
   <h2>Agendamento Confirmado</h2>
   <p id="resumo"></p>
-
   <p>Pagamento via Pix</p>
-  <img src="qrcode-pix.png" width="200">
-
-  <a href="https://maps.app.goo.gl/4FCZAq8sARFvnLb17" target="_blank">
-    Rua Clóvis Santos, 382<br>
-    CEP 45602-405<br>
-    Ver no Google Maps
-  </a>
-
+  <img src="qrcode-pix.png" alt="Pix" width="200">
+  <a href="https://maps.app.goo.gl/4FCZAq8sARFvnLb17" target="_blank">Ver localização no Google Maps</a>
   <a id="whatsappLink" target="_blank">Confirmar no WhatsApp</a>
 </section>
 
@@ -156,11 +132,6 @@ footer {
 </footer>
 
 <script>
-function irAgendamento() {
-  document.getElementById("home").style.display = "none";
-  document.getElementById("agendamento").style.display = "block";
-}
-
 const servicos = [
   "Cabelo e barba - R$40",
   "Cabelo - R$30",
@@ -175,6 +146,7 @@ const servicos = [
 
 let servicoSelecionado = "";
 
+// Cria botões de serviço
 const container = document.getElementById("services");
 servicos.forEach(s => {
   const btn = document.createElement("button");
@@ -187,6 +159,13 @@ servicos.forEach(s => {
   container.appendChild(btn);
 });
 
+// Mostrar a tela de agendamento
+function mostrarAgendamento() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("agendamento").style.display = "block";
+}
+
+// Confirmar agendamento
 function confirmar() {
   const nome = document.getElementById("nome").value;
   const tel = document.getElementById("telefone").value;
@@ -209,8 +188,7 @@ function confirmar() {
     `Olá ${nome}! Seu agendamento na Barbearia Lima foi confirmado.\nServiço: ${servicoSelecionado}\nData: ${data} às ${hora}`
   );
 
-  document.getElementById("whatsappLink").href =
-    `https://wa.me/55${tel.replace(/\D/g, "")}?text=${msg}`;
+  document.getElementById("whatsappLink").href = `https://wa.me/55${tel.replace(/\D/g, "")}?text=${msg}`;
 }
 </script>
 
